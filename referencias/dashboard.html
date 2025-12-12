@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dark-primary': '#050509',
+                        'dark-surface': '#12131B',
+                        'dark-elevated': '#151621',
+                        'gold-primary': '#E4C27A',
+                        'gold-secondary': '#C9A965',
+                        'text-primary': '#F5F5F5',
+                        'text-secondary': '#A0A3B1',
+                        'border-subtle': '#262837',
+                        'success': '#4ADE80',
+                        'error': '#F97373'
+                    }
+                }
+            }
+        }
+    </script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.plot.ly/plotly-3.1.1.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        ::-webkit-scrollbar { display: none;}
+        * { font-family: 'Inter', sans-serif; }
+        .glass-effect {
+            background: rgba(15, 16, 24, 0.75);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(228, 194, 122, 0.18);
+        }
+        .glass-effect-light {
+            background: rgba(18, 19, 27, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(228, 194, 122, 0.12);
+        }
+        .chip-active {
+            background: rgba(228, 194, 122, 0.15);
+            border: 1px solid rgba(228, 194, 122, 0.4);
+        }
+        .focus-ring:focus {
+            outline: 2px solid rgba(228, 194, 122, 0.6);
+            outline-offset: 2px;
+        }
+        input:focus, select:focus, button:focus {
+            outline: 2px solid rgba(228, 194, 122, 0.6);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body class="bg-dark-primary text-text-primary min-h-screen">
+
+<div id="header" class="glass-effect-light sticky top-0 z-50">
+    <div class="max-w-[1920px] mx-auto px-8 py-5">
+        <div class="flex items-center justify-between gap-8">
+            <div class="flex-shrink-0">
+                <h1 class="text-lg font-semibold text-text-primary">Clínica Odontológica Dr. João</h1>
+                <p class="text-sm text-text-secondary mt-0.5">Painel de Campanhas</p>
+            </div>
+            
+            <div id="campaign-selector" class="flex-1 max-w-md">
+                <div class="relative">
+                    <select class="w-full bg-dark-elevated border border-border-subtle rounded-lg px-4 py-3 text-text-primary text-sm focus-ring appearance-none cursor-pointer">
+                        <option>Todas as campanhas</option>
+                        <option>Harmonização facial</option>
+                        <option>Toxina botulínica</option>
+                        <option>Implantes dentários</option>
+                        <option>Clareamento dental</option>
+                        <option>Ortodontia invisível</option>
+                    </select>
+                    <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-text-secondary pointer-events-none"></i>
+                </div>
+            </div>
+            
+            <div id="period-selector" class="flex items-center gap-2 flex-wrap">
+                <button class="chip-active px-4 py-2 rounded-full text-xs font-medium text-gold-primary transition-all hover:bg-opacity-20 focus-ring">
+                    Hoje
+                </button>
+                <button class="px-4 py-2 rounded-full text-xs font-medium text-text-secondary border border-border-subtle transition-all hover:border-gold-primary hover:text-gold-primary focus-ring">
+                    Ontem
+                </button>
+                <button class="px-4 py-2 rounded-full text-xs font-medium text-text-secondary border border-border-subtle transition-all hover:border-gold-primary hover:text-gold-primary focus-ring">
+                    Últimos 7 dias
+                </button>
+                <button class="px-4 py-2 rounded-full text-xs font-medium text-text-secondary border border-border-subtle transition-all hover:border-gold-primary hover:text-gold-primary focus-ring">
+                    Últimos 30 dias
+                </button>
+                <button class="px-4 py-2 rounded-full text-xs font-medium text-text-secondary border border-border-subtle transition-all hover:border-gold-primary hover:text-gold-primary focus-ring">
+                    Este mês
+                </button>
+                <button class="px-4 py-2 rounded-full text-xs font-medium text-text-secondary border border-border-subtle transition-all hover:border-gold-primary hover:text-gold-primary focus-ring">
+                    Mês passado
+                </button>
+                <button class="px-4 py-2 rounded-full text-xs font-medium text-text-secondary border border-border-subtle transition-all hover:border-gold-primary hover:text-gold-primary focus-ring">
+                    <i class="fa-regular fa-calendar mr-1"></i>
+                    Personalizado
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<main class="max-w-[1920px] mx-auto px-8 py-8">
+    
+    <section id="kpi-cards" class="mb-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+            
+            <div class="glass-effect rounded-2xl p-6 hover:border-gold-primary transition-all">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 rounded-xl bg-dark-elevated flex items-center justify-center">
+                        <i class="fa-solid fa-wallet text-gold-primary text-xl"></i>
+                    </div>
+                </div>
+                <div class="space-y-1">
+                    <p class="text-xs text-text-secondary font-medium uppercase tracking-wide">Investimento</p>
+                    <p class="text-3xl font-bold text-gold-primary">R$ 2.345</p>
+                    <div class="flex items-center gap-1.5 mt-2">
+                        <i class="fa-solid fa-arrow-up text-success text-xs"></i>
+                        <span class="text-xs text-success font-medium">+12%</span>
+                        <span class="text-xs text-text-secondary">vs período anterior</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-effect rounded-2xl p-6 hover:border-gold-primary transition-all">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 rounded-xl bg-dark-elevated flex items-center justify-center">
+                        <i class="fa-solid fa-mouse-pointer text-gold-primary text-xl"></i>
+                    </div>
+                </div>
+                <div class="space-y-1">
+                    <p class="text-xs text-text-secondary font-medium uppercase tracking-wide">Cliques</p>
+                    <p class="text-3xl font-bold text-text-primary">1.234</p>
+                    <div class="flex items-center gap-1.5 mt-2">
+                        <span class="text-xs text-text-secondary">CTR</span>
+                        <span class="text-xs text-gold-primary font-medium">3,5%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-effect rounded-2xl p-6 hover:border-gold-primary transition-all">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 rounded-xl bg-dark-elevated flex items-center justify-center">
+                        <i class="fa-solid fa-user-plus text-gold-primary text-xl"></i>
+                    </div>
+                </div>
+                <div class="space-y-1">
+                    <p class="text-xs text-text-secondary font-medium uppercase tracking-wide">Leads</p>
+                    <p class="text-3xl font-bold text-text-primary">87</p>
+                    <div class="flex items-center gap-1.5 mt-2">
+                        <span class="text-xs text-text-secondary">Form + WhatsApp</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-effect rounded-2xl p-6 hover:border-gold-primary transition-all">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 rounded-xl bg-dark-elevated flex items-center justify-center">
+                        <i class="fa-solid fa-dollar-sign text-gold-primary text-xl"></i>
+                    </div>
+                </div>
+                <div class="space-y-1">
+                    <p class="text-xs text-text-secondary font-medium uppercase tracking-wide">Custo por Lead</p>
+                    <p class="text-3xl font-bold text-text-primary">R$ 26,95</p>
+                    <div class="flex items-center gap-1.5 mt-2">
+                        <i class="fa-solid fa-arrow-down text-success text-xs"></i>
+                        <span class="text-xs text-success font-medium">-8%</span>
+                        <span class="text-xs text-text-secondary">vs anterior</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-effect rounded-2xl p-6 hover:border-gold-primary transition-all">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 rounded-xl bg-dark-elevated flex items-center justify-center">
+                        <i class="fa-solid fa-calendar-check text-gold-primary text-xl"></i>
+                    </div>
+                </div>
+                <div class="space-y-1">
+                    <p class="text-xs text-text-secondary font-medium uppercase tracking-wide">Agendamentos</p>
+                    <p class="text-3xl font-bold text-text-primary">34</p>
+                    <div class="flex items-center gap-1.5 mt-2">
+                        <span class="text-xs text-text-secondary">Taxa</span>
+                        <span class="text-xs text-gold-primary font-medium">39%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-effect rounded-2xl p-6 hover:border-gold-primary transition-all">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="w-12 h-12 rounded-xl bg-dark-elevated flex items-center justify-center">
+                        <i class="fa-solid fa-chart-line text-gold-primary text-xl"></i>
+                    </div>
+                </div>
+                <div class="space-y-1">
+                    <p class="text-xs text-text-secondary font-medium uppercase tracking-wide">ROAS</p>
+                    <p class="text-3xl font-bold text-text-primary">4,2</p>
+                    <div class="flex items-center gap-1.5 mt-2">
+                        <i class="fa-solid fa-arrow-up text-success text-xs"></i>
+                        <span class="text-xs text-success font-medium">Acima da meta</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="performance-chart" class="mb-10">
+        <div class="glass-effect rounded-2xl p-8">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h2 class="text-xl font-semibold text-text-primary mb-1">Performance da Campanha</h2>
+                    <p class="text-sm text-text-secondary">Evolução dos principais indicadores no período selecionado</p>
+                </div>
+                <div id="chart-toggles" class="flex items-center gap-3">
+                    <button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-dark-elevated border border-gold-primary text-gold-primary text-sm font-medium focus-ring">
+                        <i class="fa-solid fa-check text-xs"></i>
+                        Investimento
+                    </button>
+                    <button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-dark-elevated border border-border-subtle text-text-secondary text-sm font-medium hover:border-gold-primary hover:text-gold-primary focus-ring">
+                        <i class="fa-solid fa-check text-xs"></i>
+                        Cliques
+                    </button>
+                    <button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-dark-elevated border border-border-subtle text-text-secondary text-sm font-medium hover:border-gold-primary hover:text-gold-primary focus-ring">
+                        <i class="fa-solid fa-check text-xs"></i>
+                        Leads
+                    </button>
+                </div>
+            </div>
+            <div id="main-performance-chart" style="height: 450px;"></div>
+        </div>
+    </section>
+
+    <section id="secondary-charts" class="mb-10">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            
+            <div class="glass-effect rounded-2xl p-8">
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-text-primary mb-1">Custo por Lead Diário</h3>
+                    <p class="text-sm text-text-secondary">Análise do CPL ao longo do período</p>
+                </div>
+                <div id="cpl-chart" style="height: 320px;"></div>
+            </div>
+
+            <div class="glass-effect rounded-2xl p-8">
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-text-primary mb-1">Distribuição por Posicionamento</h3>
+                    <p class="text-sm text-text-secondary">Investimento por tipo de anúncio</p>
+                </div>
+                <div id="placement-chart" style="height: 320px;"></div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="ads-table" class="mb-10">
+        <div class="glass-effect rounded-2xl p-8">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h2 class="text-xl font-semibold text-text-primary mb-1">Anúncios da Campanha</h2>
+                    <p class="text-sm text-text-secondary">Desempenho detalhado de cada anúncio ativo</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button class="px-4 py-2 rounded-lg bg-dark-elevated border border-border-subtle text-text-secondary text-sm font-medium hover:border-gold-primary hover:text-gold-primary focus-ring">
+                        <i class="fa-solid fa-filter mr-2"></i>
+                        Filtrar
+                    </button>
+                    <button class="px-4 py-2 rounded-lg bg-dark-elevated border border-border-subtle text-text-secondary text-sm font-medium hover:border-gold-primary hover:text-gold-primary focus-ring">
+                        <i class="fa-solid fa-download mr-2"></i>
+                        Exportar
+                    </button>
+                </div>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="border-b-2 border-gold-primary">
+                            <th class="text-left py-4 px-4 text-sm font-semibold text-text-primary">Nome do Anúncio</th>
+                            <th class="text-center py-4 px-4 text-sm font-semibold text-text-primary">Status</th>
+                            <th class="text-right py-4 px-4 text-sm font-semibold text-text-primary">Investimento</th>
+                            <th class="text-right py-4 px-4 text-sm font-semibold text-text-primary">Cliques</th>
+                            <th class="text-right py-4 px-4 text-sm font-semibold text-text-primary">Leads</th>
+                            <th class="text-right py-4 px-4 text-sm font-semibold text-text-primary">CPL</th>
+                            <th class="text-right py-4 px-4 text-sm font-semibold text-text-primary">CTR</th>
+                            <th class="text-center py-4 px-4 text-sm font-semibold text-text-primary">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-border-subtle hover:bg-dark-elevated transition-colors">
+                            <td class="py-4 px-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-lg bg-dark-elevated flex items-center justify-center">
+                                        <i class="fa-solid fa-image text-gold-primary"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium text-text-primary">Harmonização Facial - Promoção</p>
+                                        <p class="text-xs text-text-secondary">Feed + Stories</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="py-4 px-4 text-center">
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-success bg-opacity-10 text-success text-xs font-medium">
+                                    <i class="fa-solid fa-circle text-[6px]"></i>
+                                    Ativo
+                                </span>
+                            </td>
+                            <td class="py-4 px-4 text-right text-sm font-medium text-text-primary">R$ 845,00</td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">456</td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">32</td>
+                            <td class="py-4 px-4 text-right text-sm font-medium text-gold-primary">R$ 26,41</td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">3,8%</td>
+                            <td class="py-4 px-4 text-center">
+                                <button class="w-8 h-8 rounded-lg hover:bg-dark-elevated flex items-center justify-center mx-auto focus-ring" aria-label="Ver detalhes">
+                                    <i class="fa-solid fa-circle-info text-text-secondary"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-border-subtle hover:bg-dark-elevated transition-colors">
+                            <td class="py-4 px-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-lg bg-dark-elevated flex items-center justify-center">
+                                        <i class="fa-solid fa-image text-gold-primary"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium text-text-primary">Toxina Botulínica - Resultado Natural</p>
+                                        <p class="text-xs text-text-secondary">Reels</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="py-4 px-4 text-center">
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-success bg-opacity-10 text-success text-xs font-medium">
+                                    <i class="fa-solid fa-circle text-[6px]"></i>
+                                    Ativo
+                                </span>
+                            </td>
+                            <td class="py-4 px-4 text-right text-sm font-medium text-text-primary">R$ 623,00</td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">312</td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">23</td>
+                            <td class="py-4 px-4 text-right text-sm font-medium text-gold-primary">R$ 27,09</td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">3,2%</td>
+                            <td class="py-4 px-4 text-center">
+                                <button class="w-8 h-8 rounded-lg hover:bg-dark-elevated flex items-center justify-center mx-auto focus-ring" aria-label="Ver detalhes">
+                                    <i class="fa-solid fa-circle-info text-text-secondary"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-border-subtle hover:bg-dark-elevated transition-colors">
+                            <td class="py-4 px-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-lg bg-dark-elevated flex items-center justify-center">
+                                        <i class="fa-solid fa-image text-gold-primary"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium text-text-primary">Implantes - Tecnologia Avançada</p>
+                                        <p class="text-xs text-text-secondary">Feed</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="py-4 px-4 text-center">
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-success bg-opacity-10 text-success text-xs font-medium">
+                                    <i class="fa-solid fa-circle text-[6px]"></i>
+                                    Ativo
+                                </span>
+                            </td>
+                            <td class="py-4 px-4 text-right text-sm font-medium text-text-primary">R$ 512,00</td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">267</td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">19</td>
+                            <td class="py-4 px-4 text-right text-sm font-medium text-gold-primary">R$ 26,95</td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">3,5%</td>
+                            <td class="py-4 px-4 text-center">
+                                <button class="w-8 h-8 rounded-lg hover:bg-dark-elevated flex items-center justify-center mx-auto focus-ring" aria-label="Ver detalhes">
+                                    <i class="fa-solid fa-circle-info text-text-secondary"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-border-subtle hover:bg-dark-elevated transition-colors">
+                            <td class="py-4 px-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-lg bg-dark-elevated flex items-center justify-center">
+                                        <i class="fa-solid fa-image text-gold-primary"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium text-text-primary">Clareamento Dental - Sorriso Perfeito</p>
+                                        <p class="text-xs text-text-secondary">Stories</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="py-4 px-4 text-center">
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-text-secondary bg-opacity-10 text-text-secondary text-xs font-medium">
+                                    <i class="fa-solid fa-circle text-[6px]"></i>
+                                    Pausado
+                                </span>
+                            </td>
+                            <td class="py-4 px-4 text-right text-sm font-medium text-text-primary">R$ 234,00</td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">134</td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">8</td>
+                            <td class="py-4 px-4 text-right text-sm font-medium text-gold-primary">R$ 29,25</td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">2,9%</td>
+                            <td class="py-4 px-4 text-center">
+                                <button class="w-8 h-8 rounded-lg hover:bg-dark-elevated flex items-center justify-center mx-auto focus-ring" aria-label="Ver detalhes">
+                                    <i class="fa-solid fa-circle-info text-text-secondary"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-dark-elevated transition-colors">
+                            <td class="py-4 px-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-lg bg-dark-elevated flex items-center justify-center">
+                                        <i class="fa-solid fa-image text-gold-primary"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium text-text-primary">Ortodontia Invisível - Alinhadores</p>
+                                        <p class="text-xs text-text-secondary">Feed + Reels</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="py-4 px-4 text-center">
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-success bg-opacity-10 text-success text-xs font-medium">
+                                    <i class="fa-solid fa-circle text-[6px]"></i>
+                                    Ativo
+                                </span>
+                            </td>
+                            <td class="py-4 px-4 text-right text-sm font-medium text-text-primary">R$ 131,00</td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">65</td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">5</td>
+                            <td class="py-4 px-4 text-right text-sm font-medium text-gold-primary">R$ 26,20</td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">4,1%</td>
+                            <td class="py-4 px-4 text-center">
+                                <button class="w-8 h-8 rounded-lg hover:bg-dark-elevated flex items-center justify-center mx-auto focus-ring" aria-label="Ver detalhes">
+                                    <i class="fa-solid fa-circle-info text-text-secondary"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="insights-section" class="mb-10">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <div class="glass-effect rounded-2xl p-6">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-success bg-opacity-10 flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-lightbulb text-success text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-semibold text-text-primary mb-2">Melhor Desempenho</h3>
+                        <p class="text-sm text-text-secondary leading-relaxed">Os anúncios em Reels estão gerando 23% mais engajamento que outros formatos. Considere aumentar o investimento neste posicionamento.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-effect rounded-2xl p-6">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-gold-primary bg-opacity-10 flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-trophy text-gold-primary text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-semibold text-text-primary mb-2">Meta Atingida</h3>
+                        <p class="text-sm text-text-secondary leading-relaxed">Parabéns! Você superou a meta de ROAS em 15% este mês. O investimento está gerando retorno acima do esperado.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-effect rounded-2xl p-6">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-error bg-opacity-10 flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-exclamation-triangle text-error text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-semibold text-text-primary mb-2">Atenção Necessária</h3>
+                        <p class="text-sm text-text-secondary leading-relaxed">O anúncio "Clareamento Dental" está com CPL 8% acima da média. Recomendamos revisar o público-alvo ou criativo.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="conversion-funnel" class="mb-10">
+        <div class="glass-effect rounded-2xl p-8">
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold text-text-primary mb-1">Funil de Conversão</h2>
+                <p class="text-sm text-text-secondary">Jornada completa do usuário desde a impressão até o agendamento</p>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="relative">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-dark-elevated flex items-center justify-center">
+                                <i class="fa-solid fa-eye text-gold-primary"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-text-primary">Impressões</p>
+                                <p class="text-xs text-text-secondary">Pessoas que viram o anúncio</p>
+                            </div>
+                        </div>
+                        <p class="text-2xl font-bold text-text-primary">35.234</p>
+                    </div>
+                    <div class="w-full bg-dark-elevated rounded-full h-3">
+                        <div class="bg-gold-primary h-3 rounded-full" style="width: 100%"></div>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-dark-elevated flex items-center justify-center">
+                                <i class="fa-solid fa-mouse-pointer text-gold-primary"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-text-primary">Cliques</p>
+                                <p class="text-xs text-text-secondary">Usuários que clicaram no anúncio</p>
+                            </div>
+                        </div>
+                        <p class="text-2xl font-bold text-text-primary">1.234</p>
+                    </div>
+                    <div class="w-full bg-dark-elevated rounded-full h-3">
+                        <div class="bg-gold-primary h-3 rounded-full" style="width: 85%"></div>
+                    </div>
+                    <p class="text-xs text-text-secondary mt-1">3,5% de conversão</p>
+                </div>
+
+                <div class="relative">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-dark-elevated flex items-center justify-center">
+                                <i class="fa-solid fa-file-lines text-gold-primary"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-text-primary">Visualizações de Landing Page</p>
+                                <p class="text-xs text-text-secondary">Acessos à página de captura</p>
+                            </div>
+                        </div>
+                        <p class="text-2xl font-bold text-text-primary">987</p>
+                    </div>
+                    <div class="w-full bg-dark-elevated rounded-full h-3">
+                        <div class="bg-gold-primary h-3 rounded-full" style="width: 70%"></div>
+                    </div>
+                    <p class="text-xs text-text-secondary mt-1">80% dos cliques</p>
+                </div>
+
+                <div class="relative">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-dark-elevated flex items-center justify-center">
+                                <i class="fa-solid fa-user-plus text-gold-primary"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-text-primary">Leads Gerados</p>
+                                <p class="text-xs text-text-secondary">Formulários preenchidos</p>
+                            </div>
+                        </div>
+                        <p class="text-2xl font-bold text-text-primary">87</p>
+                    </div>
+                    <div class="w-full bg-dark-elevated rounded-full h-3">
+                        <div class="bg-gold-primary h-3 rounded-full" style="width: 45%"></div>
+                    </div>
+                    <p class="text-xs text-text-secondary mt-1">8,8% de conversão</p>
+                </div>
+
+                <div class="relative">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-dark-elevated flex items-center justify-center">
+                                <i class="fa-solid fa-calendar-check text-gold-primary"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-text-primary">Agendamentos Confirmados</p>
+                                <p class="text-xs text-text-secondary">Consultas marcadas</p>
+                            </div>
+                        </div>
+                        <p class="text-2xl font-bold text-text-primary">34</p>
+                    </div>
+                    <div class="w-full bg-dark-elevated rounded-full h-3">
+                        <div class="bg-success h-3 rounded-full" style="width: 25%"></div>
+                    </div>
+                    <p class="text-xs text-text-secondary mt-1">39% dos leads</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="audience-insights" class="mb-10">
+        <div class="glass-effect rounded-2xl p-8">
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold text-text-primary mb-1">Insights de Público</h2>
+                <p class="text-sm text-text-secondary">Análise demográfica e comportamental dos leads gerados</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <div class="bg-dark-elevated rounded-xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <i class="fa-solid fa-venus-mars text-gold-primary text-2xl"></i>
+                        <span class="text-xs text-text-secondary font-medium uppercase tracking-wide">Gênero</span>
+                    </div>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-sm text-text-primary">Feminino</span>
+                                <span class="text-sm font-medium text-gold-primary">68%</span>
+                            </div>
+                            <div class="w-full bg-border-subtle rounded-full h-2">
+                                <div class="bg-gold-primary h-2 rounded-full" style="width: 68%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-sm text-text-primary">Masculino</span>
+                                <span class="text-sm font-medium text-text-primary">32%</span>
+                            </div>
+                            <div class="w-full bg-border-subtle rounded-full h-2">
+                                <div class="bg-text-secondary h-2 rounded-full" style="width: 32%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-dark-elevated rounded-xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <i class="fa-solid fa-cake-candles text-gold-primary text-2xl"></i>
+                        <span class="text-xs text-text-secondary font-medium uppercase tracking-wide">Faixa Etária</span>
+                    </div>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-sm text-text-primary">25-34 anos</span>
+                                <span class="text-sm font-medium text-gold-primary">42%</span>
+                            </div>
+                            <div class="w-full bg-border-subtle rounded-full h-2">
+                                <div class="bg-gold-primary h-2 rounded-full" style="width: 42%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-sm text-text-primary">35-44 anos</span>
+                                <span class="text-sm font-medium text-text-primary">38%</span>
+                            </div>
+                            <div class="w-full bg-border-subtle rounded-full h-2">
+                                <div class="bg-text-secondary h-2 rounded-full" style="width: 38%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-dark-elevated rounded-xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <i class="fa-solid fa-mobile-screen-button text-gold-primary text-2xl"></i>
+                        <span class="text-xs text-text-secondary font-medium uppercase tracking-wide">Dispositivo</span>
+                    </div>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-sm text-text-primary">Mobile</span>
+                                <span class="text-sm font-medium text-gold-primary">87%</span>
+                            </div>
+                            <div class="w-full bg-border-subtle rounded-full h-2">
+                                <div class="bg-gold-primary h-2 rounded-full" style="width: 87%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-sm text-text-primary">Desktop</span>
+                                <span class="text-sm font-medium text-text-primary">13%</span>
+                            </div>
+                            <div class="w-full bg-border-subtle rounded-full h-2">
+                                <div class="bg-text-secondary h-2 rounded-full" style="width: 13%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-dark-elevated rounded-xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <i class="fa-solid fa-clock text-gold-primary text-2xl"></i>
+                        <span class="text-xs text-text-secondary font-medium uppercase tracking-wide">Horário Pico</span>
+                    </div>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-sm text-text-primary">19h-21h</span>
+                                <span class="text-sm font-medium text-gold-primary">45%</span>
+                            </div>
+                            <div class="w-full bg-border-subtle rounded-full h-2">
+                                <div class="bg-gold-primary h-2 rounded-full" style="width: 45%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-sm text-text-primary">12h-14h</span>
+                                <span class="text-sm font-medium text-text-primary">28%</span>
+                            </div>
+                            <div class="w-full bg-border-subtle rounded-full h-2">
+                                <div class="bg-text-secondary h-2 rounded-full" style="width: 28%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="comparison-section" class="mb-10">
+        <div class="glass-effect rounded-2xl p-8">
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold text-text-primary mb-1">Comparação entre Campanhas</h2>
+                <p class="text-sm text-text-secondary">Análise comparativa de desempenho das principais campanhas</p>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="border-b border-border-subtle">
+                            <th class="text-left py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wide">Campanha</th>
+                            <th class="text-right py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wide">Investimento</th>
+                            <th class="text-right py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wide">Leads</th>
+                            <th class="text-right py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wide">CPL</th>
+                            <th class="text-right py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wide">Taxa Conv.</th>
+                            <th class="text-right py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wide">ROAS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-border-subtle">
+                            <td class="py-4 px-4">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-2 h-2 rounded-full bg-gold-primary"></div>
+                                    <span class="text-sm font-medium text-text-primary">Harmonização Facial</span>
+                                </div>
+                            </td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">R$ 845,00</td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">32</td>
+                            <td class="py-4 px-4 text-right text-sm font-medium text-success">R$ 26,41</td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">7,0%</td>
+                            <td class="py-4 px-4 text-right text-sm font-medium text-gold-primary">4,8</td>
+                        </tr>
+                        <tr class="border-b border-border-subtle">
+                            <td class="py-4 px-4">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-2 h-2 rounded-full bg-text-secondary"></div>
+                                    <span class="text-sm font-medium text-text-primary">Toxina Botulínica</span>
+                                </div>
+                            </td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">R$ 623,00</td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">23</td>
+                            <td class="py-4 px-4 text-right text-sm font-medium text-text-primary">R$ 27,09</td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">7,4%</td>
+                            <td class="py-4 px-4 text-right text-sm font-medium text-gold-primary">4,2</td>
+                        </tr>
+                        <tr class="border-b border-border-subtle">
+                            <td class="py-4 px-4">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-2 h-2 rounded-full bg-text-secondary"></div>
+                                    <span class="text-sm font-medium text-text-primary">Implantes Dentários</span>
+                                </div>
+                            </td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">R$ 512,00</td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">19</td>
+                            <td class="py-4 px-4 text-right text-sm font-medium text-success">R$ 26,95</td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">7,1%</td>
+                            <td class="py-4 px-4 text-right text-sm font-medium text-gold-primary">3,9</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-4">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-2 h-2 rounded-full bg-text-secondary"></div>
+                                    <span class="text-sm font-medium text-text-primary">Clareamento Dental</span>
+                                </div>
+                            </td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">R$ 234,00</td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">8</td>
+                            <td class="py-4 px-4 text-right text-sm font-medium text-error">R$ 29,25</td>
+                            <td class="py-4 px-4 text-right text-sm text-text-primary">6,0%</td>
+                            <td class="py-4 px-4 text-right text-sm font-medium text-text-primary">3,1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="recommendations" class="mb-10">
+        <div class="glass-effect rounded-2xl p-8">
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold text-text-primary mb-1">Recomendações Estratégicas</h2>
+                <p class="text-sm text-text-secondary">Sugestões baseadas em dados para otimizar suas campanhas</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                
+                <div class="bg-dark-elevated rounded-xl p-6 border-l-4 border-success">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-success bg-opacity-10 flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-arrow-trend-up text-success"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-base font-semibold text-text-primary mb-2">Escalar Investimento</h3>
+                            <p class="text-sm text-text-secondary mb-3">A campanha "Harmonização Facial" está com ROAS 15% acima da meta. Recomendamos aumentar o orçamento em 20% para maximizar resultados.</p>
+                            <button class="text-xs font-medium text-success hover:underline focus-ring">
+                                Ver detalhes da recomendação
+                                <i class="fa-solid fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-dark-elevated rounded-xl p-6 border-l-4 border-gold-primary">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-gold-primary bg-opacity-10 flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-bullseye text-gold-primary"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-base font-semibold text-text-primary mb-2">Otimizar Público-Alvo</h3>
+                            <p class="text-sm text-text-secondary mb-3">68% dos leads são do público feminino entre 25-34 anos. Considere criar campanhas específicas para este segmento com maior potencial.</p>
+                            <button class="text-xs font-medium text-gold-primary hover:underline focus-ring">
+                                Ver detalhes da recomendação
+                                <i class="fa-solid fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-dark-elevated rounded-xl p-6 border-l-4 border-error">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-error bg-opacity-10 flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-triangle-exclamation text-error"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-base font-semibold text-text-primary mb-2">Revisar Criativo</h3>
+                            <p class="text-sm text-text-secondary mb-3">O anúncio "Clareamento Dental" tem CTR 18% abaixo da média. Teste novos criativos focando em resultados visuais e depoimentos de clientes.</p>
+                            <button class="text-xs font-medium text-error hover:underline focus-ring">
+                                Ver detalhes da recomendação
+                                <i class="fa-solid fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-dark-elevated rounded-xl p-6 border-l-4 border-gold-primary">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-gold-primary bg-opacity-10 flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-clock text-gold-primary"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-base font-semibold text-text-primary mb-2">Ajustar Programação</h3>
+                            <p class="text-sm text-text-secondary mb-3">45% dos cliques ocorrem entre 19h-21h. Configure lances mais agressivos neste horário para capturar mais leads qualificados.</p>
+                            <button class="text-xs font-medium text-gold-primary hover:underline focus-ring">
+                                Ver detalhes da recomendação
+                                <i class="fa-solid fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="footer-actions" class="mb-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <div class="glass-effect rounded-2xl p-8">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-gold-primary bg-opacity-10 flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-download text-gold-primary text-xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-lg font-semibold text-text-primary mb-2">Exportar Relatório Completo</h3>
+                        <p class="text-sm text-text-secondary mb-4">Baixe um relatório PDF detalhado com todas as métricas, gráficos e insights do período selecionado.</p>
+                        <button class="px-6 py-3 bg-gold-primary bg-opacity-10 border border-gold-primary text-gold-primary rounded-lg font-medium text-sm hover:bg-opacity-20 transition-all focus-ring">
+                            <i class="fa-solid fa-file-pdf mr-2"></i>
+                            Gerar Relatório PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-effect rounded-2xl p-8">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-gold-primary bg-opacity-10 flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-envelope text-gold-primary text-xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-lg font-semibold text-text-primary mb-2">Agendar Relatórios Automáticos</h3>
+                        <p class="text-sm text-text-secondary mb-4">Configure o envio automático de relatórios semanais ou mensais diretamente no seu e-mail.</p>
+                        <button class="px-6 py-3 bg-dark-elevated border border-border-subtle text-text-primary rounded-lg font-medium text-sm hover:border-gold-primary hover:text-gold-primary transition-all focus-ring">
+                            <i class="fa-solid fa-gear mr-2"></i>
+                            Configurar Envios
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<footer id="footer" class="glass-effect-light border-t border-border-subtle mt-16">
+    <div class="max-w-[1920px] mx-auto px-8 py-6">
+        <div class="flex items-center justify-between">
+            <p class="text-sm text-text-secondary">Desenvolvido por <span class="text-gold-primary font-medium">Sua Agência Digital</span></p>
+            <div class="flex items-center gap-6">
+                <a href="#" class="text-sm text-text-secondary hover:text-gold-primary transition-colors focus-ring">Suporte</a>
+                <a href="#" class="text-sm text-text-secondary hover:text-gold-primary transition-colors focus-ring">Documentação</a>
+                <a href="#" class="text-sm text-text-secondary hover:text-gold-primary transition-colors focus-ring">Privacidade</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+window.addEventListener('load', function() {
+    try {
+        var mainChartData = [
+            {
+                type: 'scatter',
+                mode: 'lines',
+                name: 'Investimento',
+                x: ['01/01', '02/01', '03/01', '04/01', '05/01', '06/01', '07/01', '08/01', '09/01', '10/01', '11/01', '12/01', '13/01', '14/01'],
+                y: [156, 189, 234, 198, 245, 267, 289, 312, 278, 298, 334, 356, 378, 398],
+                line: {
+                    color: '#E4C27A',
+                    width: 3
+                }
+            },
+            {
+                type: 'scatter',
+                mode: 'lines',
+                name: 'Cliques',
+                x: ['01/01', '02/01', '03/01', '04/01', '05/01', '06/01', '07/01', '08/01', '09/01', '10/01', '11/01', '12/01', '13/01', '14/01'],
+                y: [67, 89, 102, 95, 118, 134, 145, 156, 142, 167, 178, 189, 198, 212],
+                line: {
+                    color: '#A0A3B1',
+                    width: 3
+                },
+                visible: 'legendonly'
+            },
+            {
+                type: 'scatter',
+                mode: 'lines',
+                name: 'Leads',
+                x: ['01/01', '02/01', '03/01', '04/01', '05/01', '06/01', '07/01', '08/01', '09/01', '10/01', '11/01', '12/01', '13/01', '14/01'],
+                y: [4, 6, 7, 5, 8, 9, 11, 10, 8, 12, 13, 14, 15, 16],
+                line: {
+                    color: '#4ADE80',
+                    width: 3
+                },
+                visible: 'legendonly'
+            }
+        ];
+
+        var mainChartLayout = {
+            plot_bgcolor: '#050509',
+            paper_bgcolor: '#050509',
+            font: {
+                family: 'Inter, sans-serif',
+                color: '#F5F5F5'
+            },
+            xaxis: {
+                gridcolor: '#262837',
+                color: '#A0A3B1'
+            },
+            yaxis: {
+                gridcolor: '#262837',
+                color: '#A0A3B1'
+            },
+            margin: {
+                t: 20,
+                r: 20,
+                b: 50,
+                l: 60
+            },
+            showlegend: true,
+            legend: {
+                orientation: 'h',
+                x: 0,
+                y: -0.15,
+                font: {
+                    color: '#F5F5F5'
+                }
+            }
+        };
+
+        var mainChartConfig = {
+            responsive: true,
+            displayModeBar: false,
+            displaylogo: false
+        };
+
+        Plotly.newPlot('main-performance-chart', mainChartData, mainChartLayout, mainChartConfig);
+
+        var cplChartData = [{
+            type: 'bar',
+            x: ['01/01', '02/01', '03/01', '04/01', '05/01', '06/01', '07/01', '08/01', '09/01', '10/01', '11/01', '12/01', '13/01', '14/01'],
+            y: [28.5, 27.8, 26.9, 28.2, 26.4, 25.8, 26.1, 27.3, 28.9, 26.2, 25.7, 26.5, 26.8, 26.3],
+            marker: {
+                color: '#E4C27A'
+            }
+        }];
+
+        var cplChartLayout = {
+            plot_bgcolor: '#050509',
+            paper_bgcolor: '#050509',
+            font: {
+                family: 'Inter, sans-serif',
+                color: '#F5F5F5'
+            },
+            xaxis: {
+                gridcolor: '#262837',
+                color: '#A0A3B1'
+            },
+            yaxis: {
+                title: 'CPL (R$)',
+                gridcolor: '#262837',
+                color: '#A0A3B1'
+            },
+            margin: {
+                t: 20,
+                r: 20,
+                b: 50,
+                l: 60
+            },
+            showlegend: false
+        };
+
+        var cplChartConfig = {
+            responsive: true,
+            displayModeBar: false,
+            displaylogo: false
+        };
+
+        Plotly.newPlot('cpl-chart', cplChartData, cplChartLayout, cplChartConfig);
+
+        var placementChartData = [{
+            type: 'pie',
+            labels: ['Feed', 'Stories', 'Reels', 'Explore'],
+            values: [42, 28, 23, 7],
+            marker: {
+                colors: ['#E4C27A', '#C9A965', '#A0A3B1', '#262837']
+            },
+            textinfo: 'label+percent',
+            textfont: {
+                color: '#F5F5F5'
+            }
+        }];
+
+        var placementChartLayout = {
+            plot_bgcolor: '#050509',
+            paper_bgcolor: '#050509',
+            font: {
+                family: 'Inter, sans-serif',
+                color: '#F5F5F5'
+            },
+            margin: {
+                t: 20,
+                r: 20,
+                b: 20,
+                l: 20
+            },
+            showlegend: true,
+            legend: {
+                orientation: 'v',
+                x: 1,
+                y: 0.5,
+                font: {
+                    color: '#F5F5F5'
+                }
+            }
+        };
+
+        var placementChartConfig = {
+            responsive: true,
+            displayModeBar: false,
+            displaylogo: false
+        };
+
+        Plotly.newPlot('placement-chart', placementChartData, placementChartLayout, placementChartConfig);
+
+    } catch(e) {
+        console.error('Error rendering charts:', e);
+    }
+});
+</script>
+
+</body>
+</html>

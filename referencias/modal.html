@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Anúncio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dark-primary': '#050509',
+                        'dark-surface': '#12131B',
+                        'dark-elevated': '#151621',
+                        'gold-primary': '#E4C27A',
+                        'gold-secondary': '#C9A965',
+                        'text-primary': '#F5F5F5',
+                        'text-secondary': '#A0A3B1',
+                        'border-subtle': '#262837',
+                        'success': '#4ADE80',
+                        'error': '#F97373'
+                    }
+                }
+            }
+        }
+    </script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.plot.ly/plotly-3.1.1.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        ::-webkit-scrollbar { display: none;}
+        * { font-family: 'Inter', sans-serif; }
+        .glass-effect {
+            background: rgba(15, 16, 24, 0.75);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(228, 194, 122, 0.18);
+        }
+        .glass-effect-light {
+            background: rgba(18, 19, 27, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(228, 194, 122, 0.12);
+        }
+        .modal-backdrop {
+            background: rgba(5, 5, 9, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        input:focus, select:focus, button:focus, textarea:focus {
+            outline: 2px solid rgba(228, 194, 122, 0.6);
+            outline-offset: 2px;
+        }
+        .focus-ring:focus {
+            outline: 2px solid rgba(228, 194, 122, 0.6);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body class="bg-dark-primary text-text-primary overflow-hidden">
+
+<div id="modal-backdrop" class="fixed inset-0 modal-backdrop flex items-center justify-center z-50 p-6">
+    <div id="ad-details-modal" class="glass-effect rounded-2xl w-full max-w-7xl max-h-[95vh] overflow-y-auto">
+        
+        <div id="modal-header" class="sticky top-0 glass-effect-light border-b border-border-subtle z-10 rounded-t-2xl">
+            <div class="px-8 py-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <button class="w-10 h-10 rounded-lg bg-dark-elevated hover:bg-border-subtle flex items-center justify-center transition-all focus-ring" aria-label="Voltar">
+                            <i class="fa-solid fa-arrow-left text-text-primary"></i>
+                        </button>
+                        <div>
+                            <h1 class="text-2xl font-bold text-text-primary">Harmonização Facial - Promoção</h1>
+                            <p class="text-sm text-text-secondary mt-1">ID: AD-2024-001 • Feed + Stories • Campanha Ativa</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button class="px-4 py-2.5 rounded-lg bg-dark-elevated border border-border-subtle text-text-primary text-sm font-medium hover:border-gold-primary hover:text-gold-primary transition-all focus-ring">
+                            <i class="fa-solid fa-edit mr-2"></i>
+                            Editar
+                        </button>
+                        <button class="px-4 py-2.5 rounded-lg bg-error bg-opacity-10 border border-error text-error text-sm font-medium hover:bg-opacity-20 transition-all focus-ring">
+                            <i class="fa-solid fa-pause mr-2"></i>
+                            Pausar
+                        </button>
+                        <button class="w-10 h-10 rounded-lg bg-dark-elevated hover:bg-border-subtle flex items-center justify-center transition-all focus-ring" aria-label="Fechar">
+                            <i class="fa-solid fa-xmark text-text-primary text-lg"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-content" class="px-8 py-8">
+            
+            <section id="overview-section" class="mb-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <div class="lg:col-span-1">
+                        <div class="glass-effect-light rounded-xl p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-sm font-semibold text-text-secondary uppercase tracking-wide">Preview do Anúncio</h3>
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-success bg-opacity-10 text-success text-xs font-medium">
+                                    <i class="fa-solid fa-circle text-[6px]"></i>
+                                    Ativo
+                                </span>
+                            </div>
+                            <div class="mb-4">
+                                <div class="h-64 overflow-hidden rounded-lg bg-dark-elevated flex items-center justify-center">
+                                    <img class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5a84318d4f-3a4629586d5550c92e61.png" alt="professional aesthetic clinic facial harmonization procedure advertisement, modern medical aesthetic, clean professional photography" />
+                                </div>
+                            </div>
+                            <div class="space-y-3">
+                                <div>
+                                    <p class="text-xs text-text-secondary mb-1">Título Principal</p>
+                                    <p class="text-sm font-medium text-text-primary">Harmonização Facial com 30% OFF</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-text-secondary mb-1">Descrição</p>
+                                    <p class="text-sm text-text-primary leading-relaxed">Transforme seu rosto com técnicas avançadas de harmonização facial. Agende sua avaliação gratuita hoje!</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-text-secondary mb-1">Call to Action</p>
+                                    <button class="w-full py-2.5 bg-gold-primary bg-opacity-20 border border-gold-primary text-gold-primary rounded-lg text-sm font-medium">
+                                        Agendar Avaliação
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-2">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                            
+                            <div class="glass-effect-light rounded-xl p-5">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="w-10 h-10 rounded-lg bg-dark-elevated flex items-center justify-center">
+                                        <i class="fa-solid fa-wallet text-gold-primary"></i>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-text-secondary font-medium uppercase tracking-wide mb-1">Investimento</p>
+                                <p class="text-2xl font-bold text-gold-primary">R$ 845</p>
+                                <div class="flex items-center gap-1 mt-2">
+                                    <i class="fa-solid fa-arrow-up text-success text-xs"></i>
+                                    <span class="text-xs text-success font-medium">+18%</span>
+                                </div>
+                            </div>
+
+                            <div class="glass-effect-light rounded-xl p-5">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="w-10 h-10 rounded-lg bg-dark-elevated flex items-center justify-center">
+                                        <i class="fa-solid fa-eye text-gold-primary"></i>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-text-secondary font-medium uppercase tracking-wide mb-1">Impressões</p>
+                                <p class="text-2xl font-bold text-text-primary">12.4K</p>
+                                <div class="flex items-center gap-1 mt-2">
+                                    <span class="text-xs text-text-secondary">Alcance único</span>
+                                </div>
+                            </div>
+
+                            <div class="glass-effect-light rounded-xl p-5">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="w-10 h-10 rounded-lg bg-dark-elevated flex items-center justify-center">
+                                        <i class="fa-solid fa-mouse-pointer text-gold-primary"></i>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-text-secondary font-medium uppercase tracking-wide mb-1">Cliques</p>
+                                <p class="text-2xl font-bold text-text-primary">456</p>
+                                <div class="flex items-center gap-1 mt-2">
+                                    <span class="text-xs text-gold-primary font-medium">CTR 3.8%</span>
+                                </div>
+                            </div>
+
+                            <div class="glass-effect-light rounded-xl p-5">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="w-10 h-10 rounded-lg bg-dark-elevated flex items-center justify-center">
+                                        <i class="fa-solid fa-user-plus text-gold-primary"></i>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-text-secondary font-medium uppercase tracking-wide mb-1">Leads</p>
+                                <p class="text-2xl font-bold text-text-primary">32</p>
+                                <div class="flex items-center gap-1 mt-2">
+                                    <span class="text-xs text-success font-medium">Taxa 7.0%</span>
+                                </div>
+                            </div>
+
+                            <div class="glass-effect-light rounded-xl p-5">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="w-10 h-10 rounded-lg bg-dark-elevated flex items-center justify-center">
+                                        <i class="fa-solid fa-dollar-sign text-gold-primary"></i>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-text-secondary font-medium uppercase tracking-wide mb-1">CPL</p>
+                                <p class="text-2xl font-bold text-text-primary">R$ 26,41</p>
+                                <div class="flex items-center gap-1 mt-2">
+                                    <i class="fa-solid fa-arrow-down text-success text-xs"></i>
+                                    <span class="text-xs text-success font-medium">-12%</span>
+                                </div>
+                            </div>
+
+                            <div class="glass-effect-light rounded-xl p-5">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="w-10 h-10 rounded-lg bg-dark-elevated flex items-center justify-center">
+                                        <i class="fa-solid fa-hand-pointer text-gold-primary"></i>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-text-secondary font-medium uppercase tracking-wide mb-1">CPC</p>
+                                <p class="text-2xl font-bold text-text-primary">R$ 1,85</p>
+                                <div class="flex items-center gap-1 mt-2">
+                                    <span class="text-xs text-text-secondary">Média</span>
+                                </div>
+                            </div>
+
+                            <div class="glass-effect-light rounded-xl p-5">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="w-10 h-10 rounded-lg bg-dark-elevated flex items-center justify-center">
+                                        <i class="fa-solid fa-calendar-check text-gold-primary"></i>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-text-secondary font-medium uppercase tracking-wide mb-1">Agendamentos</p>
+                                <p class="text-2xl font-bold text-text-primary">14</p>
+                                <div class="flex items-center gap-1 mt-2">
+                                    <span class="text-xs text-gold-primary font-medium">Taxa 43.8%</span>
+                                </div>
+                            </div>
+
+                            <div class="glass-effect-light rounded-xl p-5">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="w-10 h-10 rounded-lg bg-dark-elevated flex items-center justify-center">
+                                        <i class="fa-solid fa-chart-line text-gold-primary"></i>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-text-secondary font-medium uppercase tracking-wide mb-1">ROAS</p>
+                                <p class="text-2xl font-bold text-text-primary">4.8</p>
+                                <div class="flex items-center gap-1 mt-2">
+                                    <i class="fa-solid fa-arrow-up text-success text-xs"></i>
+                                    <span class="text-xs text-success font-medium">Acima da meta</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="glass-effect-light rounded-xl p-6">
+                            <div class="flex items-center justify-between mb-6">
+                                <div>
+                                    <h3 class="text-lg font-semibold text-text-primary">Configurações do Anúncio</h3>
+                                    <p class="text-sm text-text-secondary mt-1">Detalhes técnicos e segmentação</p>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <div class="mb-4">
+                                        <p class="text-xs text-text-secondary font-medium uppercase tracking-wide mb-2">Posicionamentos</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-3 py-1.5 bg-dark-elevated rounded-full text-xs font-medium text-text-primary border border-gold-primary">
+                                                <i class="fa-brands fa-instagram mr-1"></i>
+                                                Feed
+                                            </span>
+                                            <span class="px-3 py-1.5 bg-dark-elevated rounded-full text-xs font-medium text-text-primary border border-gold-primary">
+                                                <i class="fa-brands fa-instagram mr-1"></i>
+                                                Stories
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <p class="text-xs text-text-secondary font-medium uppercase tracking-wide mb-2">Público-Alvo</p>
+                                        <div class="space-y-2">
+                                            <div class="flex items-center justify-between py-2 px-3 bg-dark-elevated rounded-lg">
+                                                <span class="text-sm text-text-primary">Idade</span>
+                                                <span class="text-sm font-medium text-gold-primary">25-45 anos</span>
+                                            </div>
+                                            <div class="flex items-center justify-between py-2 px-3 bg-dark-elevated rounded-lg">
+                                                <span class="text-sm text-text-primary">Gênero</span>
+                                                <span class="text-sm font-medium text-gold-primary">Todos</span>
+                                            </div>
+                                            <div class="flex items-center justify-between py-2 px-3 bg-dark-elevated rounded-lg">
+                                                <span class="text-sm text-text-primary">Localização</span>
+                                                <span class="text-sm font-medium text-gold-primary">São Paulo, SP</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <p class="text-xs text-text-secondary font-medium uppercase tracking-wide mb-2">Interesses</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-3 py-1.5 bg-dark-elevated rounded-full text-xs text-text-primary">Estética</span>
+                                            <span class="px-3 py-1.5 bg-dark-elevated rounded-full text-xs text-text-primary">Beleza</span>
+                                            <span class="px-3 py-1.5 bg-dark-elevated rounded-full text-xs text-text-primary">Saúde</span>
+                                            <span class="px-3 py-1.5 bg-dark-elevated rounded-full text-xs text-text-primary">Bem-estar</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="mb-4">
+                                        <p class="text-xs text-text-secondary font-medium uppercase tracking-wide mb-2">Orçamento</p>
+                                        <div class="space-y-2">
+                                            <div class="flex items-center justify-between py-2 px-3 bg-dark-elevated rounded-lg">
+                                                <span class="text-sm text-text-primary">Tipo</span>
+                                                <span class="text-sm font-medium text-gold-primary">Diário</span>
+                                            </div>
+                                            <div class="flex items-center justify-between py-2 px-3 bg-dark-elevated rounded-lg">
+                                                <span class="text-sm text-text-primary">Valor</span>
+                                                <span class="text-sm font-medium text-gold-primary">R$ 60,00/dia</span>
+                                            </div>
+                                            <div class="flex items-center justify-between py-2 px-3 bg-dark-elevated rounded-lg">
+                                                <span class="text-sm text-text-primary">Gasto Atual</span>
+                                                <span class="text-sm font-medium text-text-primary">R$ 845,00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <p class="text-xs text-text-secondary font-medium uppercase tracking-wide mb-2">Programação</p>
+                                        <div class="space-y-2">
+                                            <div class="flex items-center justify-between py-2 px-3 bg-dark-elevated rounded-lg">
+                                                <span class="text-sm text-text-primary">Data Início</span>
+                                                <span class="text-sm font-medium text-gold-primary">15/12/2024</span>
+                                            </div>
+                                            <div class="flex items-center justify-between py-2 px-3 bg-dark-elevated rounded-lg">
+                                                <span class="text-sm text-text-primary">Data Fim</span>
+                                                <span class="text-sm font-medium text-gold-primary">Contínuo</span>
+                                            </div>
+                                            <div class="flex items-center justify-between py-2 px-3 bg-dark-elevated rounded-lg">
+                                                <span class="text-sm text-text-primary">Dias Ativos</span>
+                                                <span class="text-sm font-medium text-text-primary">14 dias</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <p class="text-xs text-text-secondary font-medium uppercase tracking-wide mb-2">Objetivo</p>
+                                        <div class="py-2 px-3 bg-dark-elevated rounded-lg">
+                                            <span class="text-sm font-medium text-gold-primary">Geração de Leads</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="performance-charts" class="mb-8">
+                <div class="glass-effect-light rounded-xl p-8">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-text-primary mb-1">Performance ao Longo do Tempo</h3>
+                        <p class="text-sm text-text-secondary">Evolução diária das principais métricas do anúncio</p>
+                    </div>
+                    <div id="ad-performance-chart" style="height: 400px;"></div>
+                </div>
+            </section>
+
+            <section id="engagement-metrics" class="mb-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    
+                    <div class="glass-effect-light rounded-xl p-8">
+                        <div class="mb-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-1">Engajamento por Tipo</h3>
+                            <p class="text-sm text-text-secondary">Distribuição das interações dos usuários</p>
+                        </div>
+                        <div id="engagement-chart" style="height: 350px;"></div>
+                    </div>
+
+                    <div class="glass-effect-light rounded-xl p-8">
+                        <div class="mb-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-1">Performance por Posicionamento</h3>
+                            <p class="text-sm text-text-secondary">Comparativo entre Feed e Stories</p>
+                        </div>
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-lg bg-gold-primary bg-opacity-10 flex items-center justify-center">
+                                            <i class="fa-brands fa-instagram text-gold-primary"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-text-primary">Feed</p>
+                                            <p class="text-xs text-text-secondary">58% do investimento</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-lg font-bold text-gold-primary">R$ 490</p>
+                                </div>
+                                <div class="grid grid-cols-3 gap-4">
+                                    <div class="bg-dark-elevated rounded-lg p-3">
+                                        <p class="text-xs text-text-secondary mb-1">Impressões</p>
+                                        <p class="text-lg font-semibold text-text-primary">7.2K</p>
+                                    </div>
+                                    <div class="bg-dark-elevated rounded-lg p-3">
+                                        <p class="text-xs text-text-secondary mb-1">Cliques</p>
+                                        <p class="text-lg font-semibold text-text-primary">265</p>
+                                    </div>
+                                    <div class="bg-dark-elevated rounded-lg p-3">
+                                        <p class="text-xs text-text-secondary mb-1">Leads</p>
+                                        <p class="text-lg font-semibold text-text-primary">19</p>
+                                    </div>
+                                </div>
+                                <div class="mt-3 flex items-center gap-2">
+                                    <span class="text-xs text-text-secondary">CTR:</span>
+                                    <span class="text-xs font-medium text-gold-primary">3.7%</span>
+                                    <span class="text-xs text-text-secondary">•</span>
+                                    <span class="text-xs text-text-secondary">CPL:</span>
+                                    <span class="text-xs font-medium text-gold-primary">R$ 25,79</span>
+                                </div>
+                            </div>
+
+                            <div class="border-t border-border-subtle pt-6">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-lg bg-text-secondary bg-opacity-10 flex items-center justify-center">
+                                            <i class="fa-brands fa-instagram text-text-secondary"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-text-primary">Stories</p>
+                                            <p class="text-xs text-text-secondary">42% do investimento</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-lg font-bold text-text-primary">R$ 355</p>
+                                </div>
+                                <div class="grid grid-cols-3 gap-4">
+                                    <div class="bg-dark-elevated rounded-lg p-3">
+                                        <p class="text-xs text-text-secondary mb-1">Impressões</p>
+                                        <p class="text-lg font-semibold text-text-primary">5.2K</p>
+                                    </div>
+                                    <div class="bg-dark-elevated rounded-lg p-3">
+                                        <p class="text-xs text-text-secondary mb-1">Cliques</p>
+                                        <p class="text-lg font-semibold text-text-primary">191</p>
+                                    </div>
+                                    <div class="bg-dark-elevated rounded-lg p-3">
+                                        <p class="text-xs text-text-secondary mb-1">Leads</p>
+                                        <p class="text-lg font-semibold text-text-primary">13</p>
+                                    </div>
+                                </div>
+                                <div class="mt-3 flex items-center gap-2">
+                                    <span class="text-xs text-text-secondary">CTR:</span>
+                                    <span class="text-xs font-medium text-text-primary">3.7%</span>
+                                    <span class="text-xs text-text-secondary">•</span>
+                                    <span class="text-xs text-text-secondary">CPL:</span>
+                                    <span class="text-xs font-medium text-text-primary">R$ 27,31</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="demographic-breakdown" class="mb-8">
+                <div class="glass-effect-light rounded-xl p-8">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-text-primary mb-1">Análise Demográfica Detalhada</h3>
+                        <p class="text-sm text-text-secondary">Perfil completo dos usuários que interagiram com o anúncio</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        
+                        <div class="bg-dark-elevated rounded-xl p-6">
+                            <div class="flex items-center justify-between mb-5">
+                                <h4 class="text-sm font-semibold text-text-primary">Gênero</h4>
+                                <i class="fa-solid fa-venus-mars text-gold-primary"></i>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm text-text-primary">Feminino</span>
+                                        <span class="text-sm font-semibold text-gold-primary">72%</span>
+                                    </div>
+                                    <div class="w-full bg-border-subtle rounded-full h-2.5">
+                                        <div class="bg-gold-primary h-2.5 rounded-full" style="width: 72%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm text-text-primary">Masculino</span>
+                                        <span class="text-sm font-semibold text-text-primary">28%</span>
+                                    </div>
+                                    <div class="w-full bg-border-subtle rounded-full h-2.5">
+                                        <div class="bg-text-secondary h-2.5 rounded-full" style="width: 28%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-dark-elevated rounded-xl p-6">
+                            <div class="flex items-center justify-between mb-5">
+                                <h4 class="text-sm font-semibold text-text-primary">Faixa Etária</h4>
+                                <i class="fa-solid fa-cake-candles text-gold-primary"></i>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm text-text-primary">25-34 anos</span>
+                                        <span class="text-sm font-semibold text-gold-primary">48%</span>
+                                    </div>
+                                    <div class="w-full bg-border-subtle rounded-full h-2.5">
+                                        <div class="bg-gold-primary h-2.5 rounded-full" style="width: 48%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm text-text-primary">35-44 anos</span>
+                                        <span class="text-sm font-semibold text-text-primary">35%</span>
+                                    </div>
+                                    <div class="w-full bg-border-subtle rounded-full h-2.5">
+                                        <div class="bg-text-secondary h-2.5 rounded-full" style="width: 35%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm text-text-primary">45+ anos</span>
+                                        <span class="text-sm font-semibold text-text-secondary">17%</span>
+                                    </div>
+                                    <div class="w-full bg-border-subtle rounded-full h-2.5">
+                                        <div class="bg-border-subtle h-2.5 rounded-full" style="width: 17%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-dark-elevated rounded-xl p-6">
+                            <div class="flex items-center justify-between mb-5">
+                                <h4 class="text-sm font-semibold text-text-primary">Dispositivo</h4>
+                                <i class="fa-solid fa-mobile-screen-button text-gold-primary"></i>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm text-text-primary">Mobile</span>
+                                        <span class="text-sm font-semibold text-gold-primary">91%</span>
+                                    </div>
+                                    <div class="w-full bg-border-subtle rounded-full h-2.5">
+                                        <div class="bg-gold-primary h-2.5 rounded-full" style="width: 91%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm text-text-primary">Desktop</span>
+                                        <span class="text-sm font-semibold text-text-primary">9%</span>
+                                    </div>
+                                    <div class="w-full bg-border-subtle rounded-full h-2.5">
+                                        <div class="bg-text-secondary h-2.5 rounded-full" style="width: 9%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-dark-elevated rounded-xl p-6">
+                            <div class="flex items-center justify-between mb-5">
+                                <h4 class="text-sm font-semibold text-text-primary">Horário Pico</h4>
+                                <i class="fa-solid fa-clock text-gold-primary"></i>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm text-text-primary">19h-21h</span>
+                                        <span class="text-sm font-semibold text-gold-primary">52%</span>
+                                    </div>
+                                    <div class="w-full bg-border-subtle rounded-full h-2.5">
+                                        <div class="bg-gold-primary h-2.5 rounded-full" style="width: 52%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm text-text-primary">12h-14h</span>
+                                        <span class="text-sm font-semibold text-text-primary">31%</span>
+                                    </div>
+                                    <div class="w-full bg-border-subtle rounded-full h-2.5">
+                                        <div class="bg-text-secondary h-2.5 rounded-full" style="width: 31%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm text-text-primary">Outros</span>
+                                        <span class="text-sm font-semibold text-text-secondary">17%</span>
+                                    </div>
+                                    <div class="w-full bg-border-subtle rounded-full h-2.5">
+                                        <div class="bg-border-subtle h-2.5 rounded-full" style="width: 17%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section id="geographic-data" class="mb-8">
+                <div class="glass-effect-light rounded-xl p-8">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-text-primary mb-1">Distribuição Geográfica</h3>
+                        <p class="text-sm text-text-secondary">Performance por região e bairro em São Paulo</p>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="border-b border-border-subtle">
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wide">Região</th>
+                                    <th class="text-right py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wide">Impressões</th>
+                                    <th class="text-right py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wide">Cliques</th>
+                                    <th class="text-right py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wide">Leads</th>
+                                    <th class="text-right py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wide">CPL</th>
+                                    <th class="text-right py-3 px-4 text-xs font-semibold text-text-secondary uppercase tracking-wide">Taxa Conv.</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-border-subtle hover:bg-dark-elevated transition-colors">
+                                    <td class="py-4 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <i class="fa-solid fa-location-dot text-gold-primary text-sm"></i>
+                                            <span class="text-sm font-medium text-text-primary">Zona Sul</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4 text-right text-sm text-text-primary">4.2K</td>
+                                    <td class="py-4 px-4 text-right text-sm text-text-primary">178</td>
+                                    <td class="py-4 px-4 text-right text-sm text-text-primary">13</td>
+                                    <td class="py-4 px-4 text-right text-sm font-medium text-success">R$ 24,85</td>
+                                    <td class="py-4 px-4 text-right text-sm font-medium text-gold-primary">7,3%</td>
+                                </tr>
+                                <tr class="border-b border-border-subtle hover:bg-dark-elevated transition-colors">
+                                    <td class="py-4 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <i class="fa-solid fa-location-dot text-text-secondary text-sm"></i>
+                                            <span class="text-sm font-medium text-text-primary">Zona Oeste</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4 text-right text-sm text-text-primary">3.8K</td>
+                                    <td class="py-4 px-4 text-right text-sm text-text-primary">145</td>
+                                    <td class="py-4 px-4 text-right text-sm text-text-primary">10</td>
+                                    <td class="py-4 px-4 text-right text-sm font-medium text-text-primary">R$ 26,90</td>
+                                    <td class="py-4 px-4 text-right text-sm font-medium text-text-primary">6,9%</td>
+                                </tr>
+                                <tr class="border-b border-border-subtle hover:bg-dark-elevated transition-colors">
+                                    <td class="py-4 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <i class="fa-solid fa-location-dot text-text-secondary text-sm"></i>
+                                            <span class="text-sm font-medium text-text-primary">Centro</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4 text-right text-sm text-text-primary">2.6K</td>
+                                    <td class="py-4 px-4 text-right text-sm text-text-primary">89</td>
+                                    <td class="py-4 px-4 text-right text-sm text-text-primary">6</td>
+                                    <td class="py-4 px-4 text-right text-sm font-medium text-text-primary">R$ 27,50</td>
+                                    <td class="py-4 px-4 text-right text-sm font-medium text-text-primary">6,7%</td>
+                                </tr>
+                                <tr class="hover:bg-dark-elevated transition-colors">
+                                    <td class="py-4 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <i class="fa-solid fa-location-dot text-text-secondary text-sm"></i>
+                                            <span class="text-sm font-medium text-text-primary">Zona Leste</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4 text-right text-sm text-text-primary">1.8K</td>
+                                    <td class="py-4 px-4 text-right text-sm text-text-primary">44</td>
+                                    <td class="py-4 px-4 text-right text-sm text-text-primary">3</td>
+                                    <td class="py-4 px-4 text-right text-sm font-medium text-error">R$ 28,33</td>
+                                    <td class="py-4 px-4 text-right text-sm font-medium text-text-secondary">6,8%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="conversion-funnel-detail" class="mb-8">
+                <div class="glass-effect-light rounded-xl p-8">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-text-primary mb-1">Funil de Conversão Detalhado</h3>
+                        <p class="text-sm text-text-secondary">Jornada completa do usuário desde a visualização até o agendamento</p>
+                    </div>
+                    
+                    <div class="space-y-5">
+                        <div class="relative">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-gold-primary bg-opacity-10 flex items-center justify-center">
+                                        <i class="fa-solid fa-eye text-gold-primary text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-base font-semibold text-text-primary">Impressões</p>
+                                        <p class="text-xs text-text-secondary">Usuários que visualizaram o anúncio</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-2xl font-bold text-text-primary">12.4K</p>
+                                    <p class="text-xs text-text-secondary">100% do funil</p>
+                                </div>
+                            </div>
+                            <div class="w-full bg-dark-elevated rounded-full h-4">
+                                <div class="bg-gold-primary h-4 rounded-full" style="width: 100%"></div>
+                            </div>
+                        </div>
+
+                        <div class="relative">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-gold-primary bg-opacity-10 flex items-center justify-center">
+                                        <i class="fa-solid fa-mouse-pointer text-gold-primary text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-base font-semibold text-text-primary">Cliques no Anúncio</p>
+                                        <p class="text-xs text-text-secondary">Usuários que clicaram para saber mais</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-2xl font-bold text-text-primary">456</p>
+                                    <p class="text-xs text-success">3,8% de conversão</p>
+                                </div>
+                            </div>
+                            <div class="w-full bg-dark-elevated rounded-full h-4">
+                                <div class="bg-gold-primary h-4 rounded-full" style="width: 88%"></div>
+                            </div>
+                        </div>
+
+                        <div class="relative">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-gold-primary bg-opacity-10 flex items-center justify-center">
+                                        <i class="fa-solid fa-file-lines text-gold-primary text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-base font-semibold text-text-primary">Landing Page</p>
+                                        <p class="text-xs text-text-secondary">Acessos à página de captura</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-2xl font-bold text-text-primary">389</p>
+                                    <p class="text-xs text-success">85,3% dos cliques</p>
+                                </div>
+                            </div>
+                            <div class="w-full bg-dark-elevated rounded-full h-4">
+                                <div class="bg-gold-primary h-4 rounded-full" style="width: 75%"></div>
+                            </div>
+                        </div>
+
+                        <div class="relative">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-gold-primary bg-opacity-10 flex items-center justify-center">
+                                        <i class="fa-solid fa-pen-to-square text-gold-primary text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-base font-semibold text-text-primary">Formulário Iniciado</p>
+                                        <p class="text-xs text-text-secondary">Usuários que começaram a preencher</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-2xl font-bold text-text-primary">78</p>
+                                    <p class="text-xs text-text-primary">20,1% das visualizações</p>
+                                </div>
+                            </div>
+                            <div class="w-full bg-dark-elevated rounded-full h-4">
+                                <div class="bg-gold-primary h-4 rounded-full" style="width: 50%"></div>
+                            </div>
+                        </div>
+
+                        <div class="relative">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-success bg-opacity-10 flex items-center justify-center">
+                                        <i class="fa-solid fa-user-plus text-success text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-base font-semibold text-text-primary">Lead Gerado</p>
+                                        <p class="text-xs text-text-secondary">Formulários completados</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-2xl font-bold text-text-primary">32</p>
+                                    <p class="text-xs text-success">41,0% de conclusão</p>
+                                </div>
+                            </div>
+                            <div class="w-full bg-dark-elevated rounded-full h-4">
+                                <div class="bg-success h-4 rounded-full" style="width: 35%"></div>
+                            </div>
+                        </div>
+
+                        <div class="relative">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-success bg-opacity-10 flex items-center justify-center">
+                                        <i class="fa-solid fa-calendar-check text-success text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-base font-semibold text-text-primary">Agendamento Confirmado</p>
+                                        <p class="text-xs text-text-secondary">Consultas efetivamente marcadas</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-2xl font-bold text-text-primary">14</p>
+                                    <p class="text-xs text-success">43,8% dos leads</p>
+                                </div>
+                            </div>
+                            <div class="w-full bg-dark-elevated rounded-full h-4">
+                                <div class="bg-success h-4 rounded-full" style="width: 25%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t border-border-subtle">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="bg-dark-elevated rounded-xl p-5">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <i class="fa-solid fa-percentage text-gold-primary text-xl"></i>
+                                    <p class="text-xs text-text-secondary font-medium uppercase tracking-wide">Taxa Global</p>
+                                </div>
+                                <p class="text-3xl font-bold text-gold-primary mb-1">0,11%</p>
+                                <p class="text-xs text-text-secondary">Impressões → Agendamentos</p>
+                            </div>
+                            <div class="bg-dark-elevated rounded-xl p-5">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <i class="fa-solid fa-funnel-dollar text-gold-primary text-xl"></i>
+                                    <p class="text-xs text-text-secondary font-medium uppercase tracking-wide">Custo por Agendamento</p>
+                                </div>
+                                <p class="text-3xl font-bold text-gold-primary mb-1">R$ 60,36</p>
+                                <p class="text-xs text-text-secondary">Investimento total / agendamentos</p>
+                            </div>
+                            <div class="bg-dark-elevated rounded-xl p-5">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <i class="fa-solid fa-chart-line text-success text-xl"></i>
+                                    <p class="text-xs text-text-secondary font-medium uppercase tracking-wide">Eficiência</p>
+                                </div>
+                                <p class="text-3xl font-bold text-success mb-1">Excelente</p>
+                                <p class="text-xs text-text-secondary">18% acima da meta</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="lead-quality" class="mb-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    
+                    <div class="glass-effect-light rounded-xl p-8">
+                        <div class="mb-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-1">Qualidade dos Leads</h3>
+                            <p class="text-sm text-text-secondary">Análise de qualificação e origem</p>
+                        </div>
+                        
+                        <div class="space-y-5">
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-sm font-medium text-text-primary">Alta Qualificação</span>
+                                    <span class="text-sm font-bold text-success">62%</span>
+                                </div>
+                                <div class="w-full bg-dark-elevated rounded-full h-3">
+                                    <div class="bg-success h-3 rounded-full" style="width: 62%"></div>
+                                </div>
+                                <p class="text-xs text-text-secondary mt-2">Leads com perfil completo e interesse confirmado</p>
+                            </div>
+
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-sm font-medium text-text-primary">Média Qualificação</span>
+                                    <span class="text-sm font-bold text-gold-primary">28%</span>
+                                </div>
+                                <div class="w-full bg-dark-elevated rounded-full h-3">
+                                    <div class="bg-gold-primary h-3 rounded-full" style="width: 28%"></div>
+                                </div>
+                                <p class="text-xs text-text-secondary mt-2">Leads com informações parciais</p>
+                            </div>
+
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-sm font-medium text-text-primary">Baixa Qualificação</span>
+                                    <span class="text-sm font-bold text-text-secondary">10%</span>
+                                </div>
+                                <div class="w-full bg-dark-elevated rounded-full h-3">
+                                    <div class="bg-text-secondary h-3 rounded-full" style="width: 10%"></div>
+                                </div>
+                                <p class="text-xs text-text-secondary mt-2">Leads com dados incompletos ou inconsistentes</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-6 border-t border-border-subtle">
+                            <h4 class="text-sm font-semibold text-text-primary mb-4">Origem dos Leads</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between py-2 px-3 bg-dark-elevated rounded-lg">
+                                    <div class="flex items-center gap-2">
+                                        <i class="fa-brands fa-wpforms text-gold-primary"></i>
+                                        <span class="text-sm text-text-primary">Formulário Integrado</span>
+                                    </div>
+                                    <span class="text-sm font-semibold text-gold-primary">21 leads</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2 px-3 bg-dark-elevated rounded-lg">
+                                    <div class="flex items-center gap-2">
+                                        <i class="fa-brands fa-whatsapp text-success"></i>
+                                        <span class="text-sm text-text-primary">WhatsApp Direct</span>
+                                    </div>
+                                    <span class="text-sm font-semibold text-text-primary">11 leads</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-effect-light rounded-xl p-8">
+                        <div class="mb-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-1">Status de Acompanhamento</h3>
+                            <p class="text-sm text-text-secondary">Situação atual dos leads gerados</p>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="bg-dark-elevated rounded-xl p-5">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-lg bg-success bg-opacity-10 flex items-center justify-center">
+                                            <i class="fa-solid fa-calendar-check text-success"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-semibold text-text-primary">Agendados</p>
+                                            <p class="text-xs text-text-secondary">Consultas confirmadas</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-2xl font-bold text-success">14</p>
+                                </div>
+                                <div class="w-full bg-border-subtle rounded-full h-2 mt-3">
+                                    <div class="bg-success h-2 rounded-full" style="width: 43.8%"></div>
+                                </div>
+                            </div>
+
+                            <div class="bg-dark-elevated rounded-xl p-5">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-lg bg-gold-primary bg-opacity-10 flex items-center justify-center">
+                                            <i class="fa-solid fa-phone text-gold-primary"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-semibold text-text-primary">Em Contato</p>
+                                            <p class="text-xs text-text-secondary">Aguardando resposta</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-2xl font-bold text-gold-primary">12</p>
+                                </div>
+                                <div class="w-full bg-border-subtle rounded-full h-2 mt-3">
+                                    <div class="bg-gold-primary h-2 rounded-full" style="width: 37.5%"></div>
+                                </div>
+                            </div>
+
+                            <div class="bg-dark-elevated rounded-xl p-5">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-lg bg-text-secondary bg-opacity-10 flex items-center justify-center">
+                                            <i class="fa-solid fa-clock text-text-secondary"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-semibold text-text-primary">Pendentes</p>
+                                            <p class="text-xs text-text-secondary">Ainda não contatados</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-2xl font-bold text-text-primary">4</p>
+                                </div>
+                                <div class="w-full bg-border-subtle rounded-full h-2 mt-3">
+                                    <div class="bg-text-secondary h-2 rounded-full" style="width: 12.5%"></div>
+                                </div>
+                            </div>
+
+                            <div class="bg-dark-elevated rounded-xl p-5">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-lg bg-error bg-opacity-10 flex items-center justify-center">
+                                            <i class="fa-solid fa-xmark text-error"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-semibold text-text-primary">Não Qualificados</p>
+                                            <p class="text-xs text-text-secondary">Leads descartados</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-2xl font-bold text-error">2</p>
+                                </div>
+                                <div class="w-full bg-border-subtle rounded-full h-2 mt-3">
+                                    <div class="bg-error h-2 rounded-full" style="width: 6.2%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="insights-recommendations" class="mb-8">
+                <div class="glass-effect-light rounded-xl p-8">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-text-primary mb-1">Insights e Recomendações</h3>
+                        <p class="text-sm text-text-secondary">Análises baseadas em dados para otimizar este anúncio</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        
+                        <div class="bg-dark-elevated rounded-xl p-6 border-l-4 border-success">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-success bg-opacity-10 flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-thumbs-up text-success text-lg"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-base font-semibold text-text-primary mb-2">Excelente Performance</h4>
+                                    <p class="text-sm text-text-secondary leading-relaxed mb-3">Este anúncio está 18% acima da meta de ROAS e tem o melhor CPL da campanha. O criativo e a segmentação estão funcionando muito bem.</p>
+                                    <div class="flex items-center gap-2">
+                                        <span class="px-2 py-1 bg-success bg-opacity-10 text-success text-xs font-medium rounded">Alta prioridade</span>
+                                        <span class="text-xs text-text-secondary">• Ação: Escalar investimento</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-dark-elevated rounded-xl p-6 border-l-4 border-gold-primary">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-gold-primary bg-opacity-10 flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-clock text-gold-primary text-lg"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-base font-semibold text-text-primary mb-2">Otimizar Horários</h4>
+                                    <p class="text-sm text-text-secondary leading-relaxed mb-3">52% dos cliques ocorrem entre 19h-21h. Configure lances mais agressivos neste período para maximizar conversões.</p>
+                                    <div class="flex items-center gap-2">
+                                        <span class="px-2 py-1 bg-gold-primary bg-opacity-10 text-gold-primary text-xs font-medium rounded">Média prioridade</span>
+                                        <span class="text-xs text-text-secondary">• Ação: Ajustar programação</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-dark-elevated rounded-xl p-6 border-l-4 border-gold-primary">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-gold-primary bg-opacity-10 flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-bullseye text-gold-primary text-lg"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-base font-semibold text-text-primary mb-2">Focar em Zona Sul</h4>
+                                    <p class="text-sm text-text-secondary leading-relaxed mb-3">A Zona Sul tem o melhor CPL (R$ 24,85) e maior taxa de conversão (7,3%). Considere criar uma variação específica para esta região.</p>
+                                    <div class="flex items-center gap-2">
+                                        <span class="px-2 py-1 bg-gold-primary bg-opacity-10 text-gold-primary text-xs font-medium rounded">Média prioridade</span>
+                                        <span class="text-xs text-text-secondary">• Ação: Segmentar geograficamente</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-dark-elevated rounded-xl p-6 border-l-4 border-text-secondary">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-text-secondary bg-opacity-10 flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-users text-text-secondary text-lg"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-base font-semibold text-text-primary mb-2">Público Feminino Dominante</h4>
+                                    <p class="text-sm text-text-secondary leading-relaxed mb-3">72% dos leads são mulheres entre 25-44 anos. O criativo pode ser ajustado para ressoar ainda mais com este público.</p>
+                                    <div class="flex items-center gap-2">
+                                        <span class="px-2 py-1 bg-text-secondary bg-opacity-10 text-text-secondary text-xs font-medium rounded">Baixa prioridade</span>
+                                        <span class="text-xs text-text-secondary">• Ação: Testar criativos específicos</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section id="ab-testing" class="mb-8">
+                <div class="glass-effect-light rounded-xl p-8">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-text-primary mb-1">Testes A/B Sugeridos</h3>
+                        <p class="text-sm text-text-secondary">Oportunidades de otimização através de testes</p>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-dark-elevated rounded-xl p-6">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-start gap-4 flex-1">
+                                    <div class="w-10 h-10 rounded-lg bg-gold-primary bg-opacity-10 flex items-center justify-center flex-shrink-0">
+                                        <i class="fa-solid fa-image text-gold-primary"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="text-base font-semibold text-text-primary mb-2">Teste de Criativo</h4>
+                                        <p class="text-sm text-text-secondary mb-3">Criar variação com foco em resultados antes/depois para aumentar engajamento</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="text-xs px-2 py-1 bg-border-subtle rounded text-text-secondary">Potencial: +15% CTR</span>
+                                            <span class="text-xs px-2 py-1 bg-border-subtle rounded text-text-secondary">Esforço: Médio</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="px-4 py-2 bg-gold-primary bg-opacity-10 border border-gold-primary text-gold-primary rounded-lg text-sm font-medium hover:bg-opacity-20 transition-all focus-ring flex-shrink-0">
+                                    Criar Teste
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="bg-dark-elevated rounded-xl p-6">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-start gap-4 flex-1">
+                                    <div class="w-10 h-10 rounded-lg bg-gold-primary bg-opacity-10 flex items-center justify-center flex-shrink-0">
+                                        <i class="fa-solid fa-comment-dots text-gold-primary"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="text-base font-semibold text-text-primary mb-2">Teste de Copy</h4>
+                                        <p class="text-sm text-text-secondary mb-3">Testar título com urgência ("Últimas vagas") vs. benefício ("Transforme seu rosto")</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="text-xs px-2 py-1 bg-border-subtle rounded text-text-secondary">Potencial: +10% Conversão</span>
+                                            <span class="text-xs px-2 py-1 bg-border-subtle rounded text-text-secondary">Esforço: Baixo</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="px-4 py-2 bg-gold-primary bg-opacity-10 border border-gold-primary text-gold-primary rounded-lg text-sm font-medium hover:bg-opacity-20 transition-all focus-ring flex-shrink-0">
+                                    Criar Teste
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="bg-dark-elevated rounded-xl p-6">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-start gap-4 flex-1">
+                                    <div class="w-10 h-10 rounded-lg bg-gold-primary bg-opacity-10 flex items-center justify-center flex-shrink-0">
+                                        <i class="fa-solid fa-hand-pointer text-gold-primary"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="text-base font-semibold text-text-primary mb-2">Teste de CTA</h4>
+                                        <p class="text-sm text-text-secondary mb-3">Comparar "Agendar Avaliação" vs. "Quero Transformar Meu Rosto"</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="text-xs px-2 py-1 bg-border-subtle rounded text-text-secondary">Potencial: +8% Cliques</span>
+                                            <span class="text-xs px-2 py-1 bg-border-subtle rounded text-text-secondary">Esforço: Baixo</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="px-4 py-2 bg-gold-primary bg-opacity-10 border border-gold-primary text-gold-primary rounded-lg text-sm font-medium hover:bg-opacity-20 transition-all focus-ring flex-shrink-0">
+                                    Criar Teste
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="activity-log" class="mb-8">
+                <div class="glass-effect-light rounded-xl p-8">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-text-primary mb-1">Histórico de Atividades</h3>
+                        <p class="text-sm text-text-secondary">Registro de alterações e eventos importantes</p>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="flex gap-4">
+                            <div class="flex flex-col items-center">
+                                <div class="w-10 h-10 rounded-full bg-success bg-opacity-10 flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-check text-success text-sm"></i>
+                                </div>
+                                <div class="w-0.5 h-full bg-border-subtle mt-2"></div>
+                            </div>
+                            <div class="flex-1 pb-6">
+                                <div class="flex items-start justify-between mb-1">
+                                    <p class="text-sm font-medium text-text-primary">Anúncio Ativado</p>
+                                    <span class="text-xs text-text-secondary">Há 14 dias</span>
+                                </div>
+                                <p class="text-sm text-text-secondary">O anúncio foi publicado e iniciou a veiculação com orçamento de R$ 60/dia</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="flex flex-col items-center">
+                                <div class="w-10 h-10 rounded-full bg-gold-primary bg-opacity-10 flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-edit text-gold-primary text-sm"></i>
+                                </div>
+                                <div class="w-0.5 h-full bg-border-subtle mt-2"></div>
+                            </div>
+                            <div class="flex-1 pb-6">
+                                <div class="flex items-start justify-between mb-1">
+                                    <p class="text-sm font-medium text-text-primary">Orçamento Ajustado</p>
+                                    <span class="text-xs text-text-secondary">Há 7 dias</span>
+                                </div>
+                                <p class="text-sm text-text-secondary">Orçamento aumentado de R$ 50 para R$ 60/dia devido à boa performance</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="flex flex-col items-center">
+                                <div class="w-10 h-10 rounded-full bg-gold-primary bg-opacity-10 flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-image text-gold-primary text-sm"></i>
+                                </div>
+                                <div class="w-0.5 h-full bg-border-subtle mt-2"></div>
+                            </div>
+                            <div class="flex-1 pb-6">
+                                <div class="flex items-start justify-between mb-1">
+                                    <p class="text-sm font-medium text-text-primary">Criativo Atualizado</p>
+                                    <span class="text-xs text-text-secondary">Há 5 dias</span>
+                                </div>
+                                <p class="text-sm text-text-secondary">Nova imagem principal adicionada com foco em resultados naturais</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="flex flex-col items-center">
+                                <div class="w-10 h-10 rounded-full bg-success bg-opacity-10 flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-trophy text-success text-sm"></i>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between mb-1">
+                                    <p class="text-sm font-medium text-text-primary">Meta de ROAS Atingida</p>
+                                    <span class="text-xs text-text-secondary">Há 2 dias</span>
+                                </div>
+                                <p class="text-sm text-text-secondary">Anúncio superou a meta de ROAS em 18%, tornando-se o melhor da campanha</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <div id="modal-footer" class="sticky bottom-0 glass-effect-light border-t border-border-subtle rounded-b-2xl">
+            <div class="px-8 py-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <button class="px-5 py-2.5 bg-dark-elevated border border-border-subtle text-text-primary rounded-lg font-medium text-sm hover:border-gold-primary hover:text-gold-primary transition-all focus-ring">
+                            <i class="fa-solid fa-download mr-2"></i>
+                            Exportar Dados
+                        </button>
+                        <button class="px-5 py-2.5 bg-dark-elevated border border-border-subtle text-text-primary rounded-lg font-medium text-sm hover:border-gold-primary hover:text-gold-primary transition-all focus-ring">
+                            <i class="fa-solid fa-copy mr-2"></i>
+                            Duplicar Anúncio
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button class="px-5 py-2.5 bg-dark-elevated border border-border-subtle text-text-primary rounded-lg font-medium text-sm hover:border-gold-primary hover:text-gold-primary transition-all focus-ring">
+                            Voltar ao Dashboard
+                        </button>
+                        <button class="px-5 py-2.5 bg-gold-primary bg-opacity-10 border border-gold-primary text-gold-primary rounded-lg font-medium text-sm hover:bg-opacity-20 transition-all focus-ring">
+                            <i class="fa-solid fa-chart-line mr-2"></i>
+                            Ver Relatório Completo
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+window.addEventListener('load', function() {
+    try {
+        var performanceData = [
+            {
+                type: 'scatter',
+                mode: 'lines',
+                name: 'Investimento (R$)',
+                x: ['15/12', '16/12', '17/12', '18/12', '19/12', '20/12', '21/12', '22/12', '23/12', '24/12', '25/12', '26/12', '27/12', '28/12'],
+                y: [45, 52, 58, 62, 65, 68, 71, 64, 59, 63, 67, 72, 76, 68],
+                line: {
+                    color: '#E4C27A',
+                    width: 3
+                }
+            },
+            {
+                type: 'scatter',
+                mode: 'lines',
+                name: 'Cliques',
+                x: ['15/12', '16/12', '17/12', '18/12', '19/12', '20/12', '21/12', '22/12', '23/12', '24/12', '25/12', '26/12', '27/12', '28/12'],
+                y: [24, 29, 34, 36, 38, 41, 43, 38, 32, 35, 39, 44, 48, 42],
+                line: {
+                    color: '#A0A3B1',
+                    width: 3
+                }
+            },
+            {
+                type: 'scatter',
+                mode: 'lines',
+                name: 'Leads',
+                x: ['15/12', '16/12', '17/12', '18/12', '19/12', '20/12', '21/12', '22/12', '23/12', '24/12', '25/12', '26/12', '27/12', '28/12'],
+                y: [1, 2, 2, 3, 2, 3, 4, 2, 2, 3, 3, 4, 5, 3],
+                line: {
+                    color: '#4ADE80',
+                    width: 3
+                }
+            }
+        ];
+
+        var performanceLayout = {
+            plot_bgcolor: '#050509',
+            paper_bgcolor: '#050509',
+            font: {
+                family: 'Inter, sans-serif',
+                color: '#F5F5F5'
+            },
+            xaxis: {
+                gridcolor: '#262837',
+                color: '#A0A3B1'
+            },
+            yaxis: {
+                gridcolor: '#262837',
+                color: '#A0A3B1'
+            },
+            margin: {
+                t: 20,
+                r: 20,
+                b: 50,
+                l: 60
+            },
+            showlegend: true,
+            legend: {
+                orientation: 'h',
+                x: 0,
+                y: -0.15,
+                font: {
+                    color: '#F5F5F5'
+                }
+            }
+        };
+
+        var performanceConfig = {
+            responsive: true,
+            displayModeBar: false,
+            displaylogo: false
+        };
+
+        Plotly.newPlot('ad-performance-chart', performanceData, performanceLayout, performanceConfig);
+
+        var engagementData = [{
+            type: 'pie',
+            labels: ['Reações', 'Comentários', 'Compartilhamentos', 'Salvamentos'],
+            values: [45, 25, 18, 12],
+            marker: {
+                colors: ['#E4C27A', '#C9A965', '#A0A3B1', '#262837']
+            },
+            textinfo: 'label+percent',
+            textfont: {
+                color: '#F5F5F5'
+            }
+        }];
+
+        var engagementLayout = {
+            plot_bgcolor: '#050509',
+            paper_bgcolor: '#050509',
+            font: {
+                family: 'Inter, sans-serif',
+                color: '#F5F5F5'
+            },
+            margin: {
+                t: 20,
+                r: 20,
+                b: 20,
+                l: 20
+            },
+            showlegend: true,
+            legend: {
+                orientation: 'v',
+                x: 1,
+                y: 0.5,
+                font: {
+                    color: '#F5F5F5'
+                }
+            }
+        };
+
+        var engagementConfig = {
+            responsive: true,
+            displayModeBar: false,
+            displaylogo: false
+        };
+
+        Plotly.newPlot('engagement-chart', engagementData, engagementLayout, engagementConfig);
+
+    } catch(e) {
+        console.error('Error rendering charts:', e);
+    }
+});
+</script>
+
+</body>
+</html>

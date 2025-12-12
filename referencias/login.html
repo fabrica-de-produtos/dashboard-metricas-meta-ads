@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dark-primary': '#050509',
+                        'dark-surface': '#12131B',
+                        'dark-elevated': '#151621',
+                        'gold-primary': '#E4C27A',
+                        'gold-secondary': '#C9A965',
+                        'text-primary': '#F5F5F5',
+                        'text-secondary': '#A0A3B1',
+                        'border-subtle': '#262837',
+                        'success': '#4ADE80',
+                        'error': '#F97373'
+                    }
+                }
+            }
+        }
+    </script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        ::-webkit-scrollbar { display: none;}
+        * { font-family: 'Inter', sans-serif; }
+        .glass-effect {
+            background: rgba(15, 16, 24, 0.75);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(228, 194, 122, 0.18);
+        }
+        .glass-effect-light {
+            background: rgba(18, 19, 27, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(228, 194, 122, 0.12);
+        }
+        input:focus, button:focus {
+            outline: 2px solid rgba(228, 194, 122, 0.6);
+            outline-offset: 2px;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #050509 0%, #0a0b12 50%, #050509 100%);
+        }
+        .floating-orb-1 {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(228, 194, 122, 0.08) 0%, rgba(228, 194, 122, 0) 70%);
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: float 20s ease-in-out infinite;
+        }
+        .floating-orb-2 {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(228, 194, 122, 0.06) 0%, rgba(228, 194, 122, 0) 70%);
+            border-radius: 50%;
+            filter: blur(50px);
+            animation: float 15s ease-in-out infinite reverse;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-30px, 30px) scale(0.9); }
+        }
+        .logo-glow {
+            box-shadow: 0 0 30px rgba(228, 194, 122, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-dark-primary text-text-primary">
+
+<div id="login-screen" class="min-h-screen gradient-bg flex items-center justify-center p-6 relative overflow-hidden">
+    
+    <div class="floating-orb-1" style="top: -200px; left: -200px;"></div>
+    <div class="floating-orb-2" style="bottom: -150px; right: -150px;"></div>
+    
+    <div class="w-full max-w-md relative z-10">
+        
+        <div id="logo-section" class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-gold-primary to-gold-secondary logo-glow mb-4">
+                <i class="fa-solid fa-chart-line text-dark-primary text-3xl"></i>
+            </div>
+            <h1 class="text-2xl font-bold text-text-primary mb-2">Painel de Resultados</h1>
+            <p class="text-sm text-text-secondary">Acesse suas campanhas e métricas</p>
+        </div>
+
+        <div id="login-card" class="glass-effect rounded-3xl p-8 shadow-2xl">
+            
+            <div id="login-header" class="mb-8">
+                <h2 class="text-xl font-semibold text-text-primary mb-2">Bem-vindo de volta</h2>
+                <p class="text-sm text-text-secondary">Entre com suas credenciais para continuar</p>
+            </div>
+
+            <form id="login-form" class="space-y-6">
+                
+                <div id="email-field" class="space-y-2">
+                    <label for="email" class="block text-sm font-medium text-text-primary">E-mail</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <i class="fa-regular fa-envelope text-text-secondary"></i>
+                        </div>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email"
+                            class="w-full pl-12 pr-4 py-3.5 bg-dark-elevated border border-border-subtle rounded-xl text-text-primary placeholder-text-secondary focus:border-gold-primary transition-all"
+                            placeholder="seu@email.com"
+                            required
+                            aria-label="Digite seu e-mail"
+                        />
+                    </div>
+                </div>
+
+                <div id="password-field" class="space-y-2">
+                    <label for="password" class="block text-sm font-medium text-text-primary">Senha</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-lock text-text-secondary"></i>
+                        </div>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password"
+                            class="w-full pl-12 pr-12 py-3.5 bg-dark-elevated border border-border-subtle rounded-xl text-text-primary placeholder-text-secondary focus:border-gold-primary transition-all"
+                            placeholder="••••••••"
+                            required
+                            aria-label="Digite sua senha"
+                        />
+                        <button 
+                            type="button" 
+                            id="toggle-password"
+                            class="absolute inset-y-0 right-0 pr-4 flex items-center text-text-secondary hover:text-gold-primary transition-colors"
+                            aria-label="Mostrar ou ocultar senha"
+                        >
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="remember-forgot" class="flex items-center justify-between">
+                    <label class="flex items-center cursor-pointer">
+                        <input 
+                            type="checkbox" 
+                            id="remember" 
+                            name="remember"
+                            class="w-4 h-4 rounded border-border-subtle bg-dark-elevated text-gold-primary focus:ring-2 focus:ring-gold-primary focus:ring-offset-0 cursor-pointer"
+                        />
+                        <span class="ml-2 text-sm text-text-secondary">Lembrar de mim</span>
+                    </label>
+                    <a href="#" class="text-sm text-gold-primary hover:text-gold-secondary transition-colors">
+                        Esqueci minha senha
+                    </a>
+                </div>
+
+                <button 
+                    type="submit" 
+                    id="login-button"
+                    class="w-full py-4 bg-gradient-to-r from-gold-primary to-gold-secondary text-dark-primary font-semibold rounded-xl hover:shadow-lg hover:shadow-gold-primary/20 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+                >
+                    Entrar no Painel
+                </button>
+
+            </form>
+
+            <div id="divider" class="relative my-8">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-border-subtle"></div>
+                </div>
+                <div class="relative flex justify-center text-xs uppercase">
+                    <span class="bg-dark-surface px-4 text-text-secondary">ou continue com</span>
+                </div>
+            </div>
+
+            <div id="social-login" class="space-y-3">
+                <button 
+                    type="button"
+                    class="w-full py-3.5 bg-dark-elevated border border-border-subtle text-text-primary rounded-xl hover:border-gold-primary hover:bg-dark-surface transition-all flex items-center justify-center gap-3"
+                >
+                    <i class="fa-brands fa-google text-lg"></i>
+                    <span class="font-medium">Continuar com Google</span>
+                </button>
+                
+                <button 
+                    type="button"
+                    class="w-full py-3.5 bg-dark-elevated border border-border-subtle text-text-primary rounded-xl hover:border-gold-primary hover:bg-dark-surface transition-all flex items-center justify-center gap-3"
+                >
+                    <i class="fa-brands fa-microsoft text-lg"></i>
+                    <span class="font-medium">Continuar com Microsoft</span>
+                </button>
+            </div>
+
+            <div id="signup-link" class="mt-8 text-center">
+                <p class="text-sm text-text-secondary">
+                    Ainda não tem uma conta? 
+                    <a href="#" class="text-gold-primary hover:text-gold-secondary font-medium transition-colors">
+                        Criar conta gratuita
+                    </a>
+                </p>
+            </div>
+
+        </div>
+
+        <div id="security-badges" class="mt-8 flex items-center justify-center gap-6">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-shield-halved text-gold-primary"></i>
+                <span class="text-xs text-text-secondary">Conexão segura</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-lock text-gold-primary"></i>
+                <span class="text-xs text-text-secondary">Criptografia SSL</span>
+            </div>
+        </div>
+
+        <div id="footer-info" class="mt-8 text-center">
+            <p class="text-xs text-text-secondary">
+                Desenvolvido por <span class="text-gold-primary font-medium">Sua Agência Digital</span>
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+window.addEventListener('load', function() {
+    
+    const togglePassword = document.getElementById('toggle-password');
+    const passwordInput = document.getElementById('password');
+    
+    if (togglePassword && passwordInput) {
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            const icon = this.querySelector('i');
+            if (type === 'password') {
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            } else {
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            }
+        });
+    }
+    
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const loginButton = document.getElementById('login-button');
+            const originalText = loginButton.innerHTML;
+            
+            loginButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Entrando...';
+            loginButton.disabled = true;
+            
+            setTimeout(function() {
+                window.location.href = 'dashboard.html';
+            }, 1500);
+        });
+    }
+});
+</script>
+
+</body>
+</html>
