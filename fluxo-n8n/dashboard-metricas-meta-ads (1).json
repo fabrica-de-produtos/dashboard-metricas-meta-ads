@@ -1,0 +1,89 @@
+{
+  "name": "dashboard-metricas-meta-ads",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "buscar-metricas",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -336,
+        -192
+      ],
+      "id": "65ff55ba-38c1-4f53-abac-ccf3928dc73d",
+      "name": "busca métricas na api da meta",
+      "webhookId": "826700fe-b080-4cb6-a1a5-73392ac990ca"
+    },
+    {
+      "parameters": {
+        "url": "https://graph.facebook.com/v23.0/act_713139149633103/insights",
+        "sendQuery": true,
+        "specifyQuery": "json",
+        "jsonQuery": "={{ JSON.stringify($item(0).$node[\"busca métricas na api da meta\"].json[\"body\"]) }}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -112,
+        -192
+      ],
+      "id": "9acfb63f-59e3-405b-beed-4dda292c9a6d",
+      "name": "busca as metricas das campanhas"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $item(\"0\").$node[\"busca as metricas das campanhas\"].json[\"data\"] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        112,
+        -192
+      ],
+      "id": "339ab6c1-6aba-4763-9055-d6d8dd2abdde",
+      "name": "retorna as metricas das campanhas"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "busca métricas na api da meta": {
+      "main": [
+        [
+          {
+            "node": "busca as metricas das campanhas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "busca as metricas das campanhas": {
+      "main": [
+        [
+          {
+            "node": "retorna as metricas das campanhas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f68031da-7e47-4952-98d7-3c37e2a90cc3",
+  "meta": {
+    "instanceId": "a7ff38881c88867cfd042195efcf2675341020b32314f157e63034a34a6a9763"
+  },
+  "id": "1cARIFVU164c6tIF",
+  "tags": []
+}
